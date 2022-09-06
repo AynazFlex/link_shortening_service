@@ -1,0 +1,36 @@
+.squeezy {
+    position: relative;
+    padding: 20px 0 40px;
+
+    & > form {
+        display: flex;
+        justify-content: flex-start;
+        align-items: Stretch;
+
+        & > input {
+            padding: 10px 20px;
+            font-size: 20px;
+        }
+
+        & > input[type="text"] {
+            border: 1px solid #111;
+            flex-grow: 1;
+        }
+
+        & > input[type="submit"] {
+            font-weight: bold;
+            text-transform: uppercase;
+            background-color: #111;
+            color: white;
+            cursor: pointer;
+        }
+    }
+
+    & > div {
+        position: absolute;
+        bottom: 0px;
+        left: calc(50%);
+        transform: translate(-50%);
+        font-size: 20px;
+    }
+}

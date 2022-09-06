@@ -1,25 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styles from "./App.module.scss";
+import Register from "./components/auth/Register";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Login from "./components/auth/Login";
+import { useSelector } from "react-redux";
+import { RootState } from "./store/store";
+import UserPage from "./components/UserPage/UserPage";
 
 function App() {
+  const isAuth = useSelector((state: RootState) => state.auth.isAuth);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+      <Route
+        path="/"
+        element={isAuth ? <UserPage /> : <Navigate to="/login" replace />}
+      />
+    </Routes>
   );
 }
 

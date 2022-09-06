@@ -1,0 +1,61 @@
+.statistics {
+
+    &>button {
+        text-align: center;
+        font-size: 30px;
+        font-weight: bold;
+        margin: 20px auto;
+        cursor: pointer;
+        background-color: transparent;
+    }
+
+    &>div>div {
+        overflow: auto;
+    }
+
+    &>div>button {
+        font-size: 20px;
+        font-weight: bold;
+        padding: 10px;
+        background-color: green;
+        margin: 40px auto;
+        cursor: pointer;
+    }
+
+    &>div>div {
+        &>div {
+            margin-top: 40px;
+            font-size: 35px;
+            text-align: center;
+        }
+
+        &>table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 20px;
+
+            & th,
+            td {
+                padding: 10px 20px;
+            }
+
+            & td,
+            th {
+                border-right: 1px solid #111;
+
+                &:last-child {
+                    border-right: none;
+                }
+            }
+
+            & th {
+                background-color: rgba(150, 212, 212, 0.4);
+                cursor: pointer;
+            }
+
+            & tr:nth-child(even) {
+                background-color: rgba(150, 212, 212, 0.4);
+            }
+        }
+    }
+}
