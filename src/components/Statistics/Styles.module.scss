@@ -9,10 +9,6 @@
         background-color: transparent;
     }
 
-    &>div>div {
-        overflow: auto;
-    }
-
     &>div>button {
         font-size: 20px;
         font-weight: bold;
@@ -23,6 +19,9 @@
     }
 
     &>div>div {
+
+        overflow-x: auto;
+
         &>div {
             margin-top: 40px;
             font-size: 35px;
@@ -31,12 +30,17 @@
 
         &>table {
             border-collapse: collapse;
+            font-size: 14px;
             width: 100%;
-            font-size: 20px;
 
             & th,
             td {
-                padding: 10px 20px;
+                padding: 5px 10px;
+            }
+
+            & input {
+                outline: none;
+                width: 30px;
             }
 
             & td,

@@ -5,9 +5,12 @@ import { getStatistics } from "../../store/statisticsReducer";
 import { RootState, useAppDispatch } from "../../store/store";
 import Item from "./Item";
 
-
 const Table: FC = () => {
   const offset = useRef<number>(0);
+  const [id, setId] = useState("");
+  const [short, setShort] = useState("");
+  const [target, setTarget] = useState("");
+  const [counter, setCounter] = useState("");
   const [sortTag, setSortTag] = useState("");
   const { items, isFetch } = useSelector(
     (state: RootState) => state.statistics
@@ -19,7 +22,18 @@ const Table: FC = () => {
   }, []);
 
   const processingItems = () => {
-    const array = [...items];
+    let array = [...items];
+    if (id) array = array.filter((item) => String(item.id).includes(id));
+    if (short)
+      array = array.filter((item) =>
+        item.short.toLowerCase().includes(short.toLowerCase())
+      );
+    if (target)
+      array = array.filter((item) =>
+        item.target.toLowerCase().includes(target.toLowerCase())
+      );
+    if (counter)
+      array = array.filter((item) => String(item.counter).includes(counter));
     sortTag === "id" &&
       array.sort((a: IRespSqueezy, b: IRespSqueezy) => a.id - b.id);
     sortTag === "short" &&
@@ -35,7 +49,8 @@ const Table: FC = () => {
     return array;
   };
 
-  const color = (clr: string) => sortTag === clr ? {color: 'green'} : {color: 'black'}
+  const color = (clr: string) =>
+    sortTag === clr ? { color: "green" } : { color: "black" };
 
   return (
     <>
@@ -46,31 +61,84 @@ const Table: FC = () => {
           <table>
             <thead>
               <tr>
-                <th style={color('id')} onClick={() => setSortTag("id")}>id</th>
-                <th style={color('short')} onClick={() => setSortTag("short")}>short</th>
-                <th style={color('target')} onClick={() => setSortTag("target")}>target</th>
-                <th style={color('counter')} onClick={() => setSortTag("counter")}>counter</th>
+                <th style={color("id")} onClick={() => setSortTag("id")}>
+                  id
+                </th>
+                <th style={color("short")} onClick={() => setSortTag("short")}>
+                  short
+                </th>
+                <th
+                  style={color("target")}
+                  onClick={() => setSortTag("target")}
+                >
+                  target
+                </th>
+                <th
+                  style={color("counter")}
+                  onClick={() => setSortTag("counter")}
+                >
+                  counter
+                </th>
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td>
+                  <input
+                    placeholder="filter"
+                    value={id}
+                    onChange={({ target: { value } }) => {
+                      setId(value);
+                    }}
+                  />
+                </td>
+                <td>
+                  <input
+                    placeholder="filter"
+                    value={short}
+                    onChange={({ target: { value } }) => {
+                      setShort(value);
+                    }}
+                  />
+                </td>
+                <td>
+                  <input
+                    placeholder="filter"
+                    style={{ width: "300px" }}
+                    value={target}
+                    onChange={({ target: { value } }) => {
+                      setTarget(value);
+                    }}
+                  />
+                </td>
+                <td>
+                  <input
+                    placeholder="filter"
+                    value={counter}
+                    onChange={({ target: { value } }) => {
+                      setCounter(value);
+                    }}
+                  />
+                </td>
+              </tr>
               {processingItems().map((item) => (
                 <Item key={item.id} {...item} />
               ))}
             </tbody>
           </table>
-        ) : <div>No links</div>}
+        ) : (
+          <div>No links</div>
+        )}
       </div>
-      {items.length > 0 && items.length % 40 === 0 && (
-        <button
-          disabled={isFetch}
-          onClick={() => {
-            offset.current += 40;
-            dispatch(getStatistics(offset.current));
-          }}
-        >
-          LOAD MORE
-        </button>
-      )}
+      <button
+        disabled={isFetch}
+        onClick={() => {
+          offset.current += 40;
+          dispatch(getStatistics(offset.current));
+        }}
+      >
+        LOAD MORE
+      </button>
     </>
   );
 };
